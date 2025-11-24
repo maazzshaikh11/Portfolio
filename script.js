@@ -97,7 +97,7 @@ if (contactForm) {
     }
 
     const SERVICE_ID = "service_aq59d2r";
-    const TEMPLATE_ID = "template_Inygxy9";
+    const TEMPLATE_ID = "template_gazl2og";
 
     const ready = await waitForEmailJS();
     if (!ready) {
