@@ -1,13 +1,13 @@
 // =========================
-// script.js — EmailJS-ready + safe fallback
+// script.js — EmailJS-ready + auto-reply fallback
 // =========================
 
-// FOOTER YEAR (id="year" expected in HTML)
+// FOOTER YEAR
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // -------------------------
-// Demo fallback (keeps original behavior for other forms)
+// Demo fallback (other forms only)
 // -------------------------
 function handleSubmitFallback(e) {
   e.preventDefault();
@@ -21,13 +21,13 @@ function handleSubmitFallback(e) {
   }
 }
 
-// attach fallback to any .contact-form that isn't the EmailJS-wired one
+// attach fallback
 document.querySelectorAll(".contact-form").forEach(f => {
   if (f.id !== "contactForm") f.addEventListener("submit", handleSubmitFallback);
 });
 
 // -------------------------
-// EmailJS SDK loader + init
+// Load EmailJS SDK
 // -------------------------
 (function loadEmailJSSDK() {
   if (window.emailjs) return;
@@ -51,7 +51,7 @@ document.querySelectorAll(".contact-form").forEach(f => {
   document.head.appendChild(s);
 })();
 
-// helper: wait for emailjs available
+// wait helper
 function waitForEmailJS(timeout = 5000) {
   const start = Date.now();
   return new Promise((resolve) => {
@@ -97,7 +97,8 @@ if (contactForm) {
     }
 
     const SERVICE_ID = "service_aq59d2r";
-    const TEMPLATE_ID = "template_gazl2og";
+    const TEMPLATE_ID = "template_gazl2og";   // receiving template
+    const AUTO_TEMPLATE_ID = "template_lnygxy9"; // auto-reply template
 
     const ready = await waitForEmailJS();
     if (!ready) {
@@ -106,12 +107,28 @@ if (contactForm) {
       return;
     }
 
+    // FIRST — send to YOU (receiving email)
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
       .then(() => {
         formStatus.textContent = "Message sent! Thanks.";
         contactForm.reset();
         sendBtn.disabled = false;
+
         setTimeout(() => formStatus.textContent = "", 3500);
+
+        // SECOND — AUTO-REPLY to USER (fallback)
+        const autoPayload = {
+          from_name: "Muaz Shaikh",
+          reply_to: templateParams.reply_to,
+          user_email: templateParams.reply_to,
+          original_message: templateParams.message,
+          message: `Hey ${templateParams.from_name}, thanks for reaching out! I got your message and I'll reply soon.\n\n— Muaz`
+        };
+
+        emailjs.send(SERVICE_ID, AUTO_TEMPLATE_ID, autoPayload)
+          .then(() => console.log("[auto-reply] sent"))
+          .catch(err => console.warn("[auto-reply] failed", err));
+
       })
       .catch((err) => {
         console.error("EmailJS send error:", err);
