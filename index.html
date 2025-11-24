@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,28 +9,27 @@
 </head>
 <body>
   <header class="header" role="banner">
-    <div class="header-inner">
-      <div class="logo">Muaz Shaikh</div>
-      <nav class="nav" role="navigation" aria-label="Main">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
+    <div class="logo">Muaz Shaikh</div>
+    <nav class="nav" role="navigation" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    </header>
 
   <main>
     <!-- HERO -->
     <section id="about" class="hero section">
       <div class="hero-content">
-        <p class="hero-intro">HI — I'M</p>
+        <p class="hero-intro">Hi — I'm</p>
         <h1 class="hero-title">Muaz Shaikh</h1>
         <p class="hero-subtitle">Software Engineering student • Full-stack Developer (Java, React, Node.js)</p>
         <p class="hero-text">
-          Software Engineering student skilled in full-stack development with strong problem-solving abilities. I build performant, user-friendly web applications and scale systems for real users.
+          Software Engineering student skilled in full-stack development with strong problem-solving
+          abilities. I build performant, user-friendly web applications and scale systems for real users.
         </p>
 
         <div class="hero-meta">
@@ -96,6 +95,7 @@
     <!-- EXPERIENCE -->
     <section class="section" id="experience">
       <h2 class="section-title">Experience</h2>
+
       <div class="timeline">
         <article class="timeline-item">
           <div class="timeline-header">
@@ -196,20 +196,21 @@
           </ul>
         </div>
 
-        <form class="contact-form" onsubmit="handleSubmit(event)">
-          <label>
+        <!-- Updated form: IDs + name attributes match script.js (EmailJS) -->
+        <form id="contactForm" class="contact-form">
+          <label for="name">
             Name
-            <input id="name" type="text" placeholder="Your name" required />
+            <input id="name" name="from_name" type="text" placeholder="Your name" required />
           </label>
-          <label>
+          <label for="email">
             Email
-            <input id="email" type="email" placeholder="you@example.com" required />
+            <input id="email" name="reply_to" type="email" placeholder="you@example.com" required />
           </label>
-          <label>
+          <label for="message">
             Message
-            <textarea id="message" rows="4" placeholder="Your message" required></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Your message" required></textarea>
           </label>
-          <button type="submit" class="btn primary full-width">Send message</button>
+          <button id="sendBtn" type="submit" class="btn primary full-width">Send message</button>
           <p id="formStatus" class="form-status" aria-live="polite"></p>
         </form>
       </div>
